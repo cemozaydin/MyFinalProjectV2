@@ -1,6 +1,8 @@
 ﻿using Business.Concrete;
+using Core.Entities;
 using DataAccess.Concrete.EntityFramework;
 using DataAccess.Concrete.InMemory;
+using Entities.Concrete;
 using System;
 
 namespace ConsoleUI
@@ -13,6 +15,7 @@ namespace ConsoleUI
 
             //CategoryTest();
 
+            
 
         }
 
@@ -30,30 +33,43 @@ namespace ConsoleUI
         {
             ProductManager productManager = new ProductManager(new EfProductDal());
 
-            Console.WriteLine("----------------------GetAll()----------------------------");
-            foreach (var product in productManager.GetAll())
-            {
-                Console.WriteLine(product.ProductName);
-            }
+            //Console.WriteLine("----------------------GetAll()----------------------------");
+            //foreach (var product in productManager.GetAll())
+            //{
+            //    Console.WriteLine(product.ProductName);
+            //}
 
-            Console.WriteLine("----------------------GetByUnitPrice-----------------------");
-            foreach (var product in productManager.GetByUnitPrice(50, 100))
-            {
-                Console.WriteLine(product.ProductName);
-            }
+            //Console.WriteLine("----------------------GetByUnitPrice-----------------------");
+            //foreach (var product in productManager.GetByUnitPrice(50, 100))
+            //{
+            //    Console.WriteLine(product.ProductName);
+            //}
 
-            Console.WriteLine("--------------------GetAllByCategoryId---------------------");
-            foreach (var product in productManager.GetAllByCategoryId(2))
-            {
-                Console.WriteLine(product.ProductName);
-            }
+            //Console.WriteLine("--------------------GetAllByCategoryId---------------------");
+            //foreach (var product in productManager.GetAllByCategoryId(2))
+            //{
+            //    Console.WriteLine(product.ProductName);
+            //}
 
             Console.WriteLine("--------------------GetProductDetailDto---------------------");
-            foreach (var productDetail in productManager.GetProductDetails())
+
+            var result = productManager.GetProductDetails();
+
+            if (result.Success==true)
             {
-                Console.WriteLine(productDetail.ProductId + " / " + productDetail.ProductName + " / " + productDetail.CategoryName );
+                foreach (var productDetail in result.Data)
+                {
+                    Console.WriteLine(productDetail.ProductId + " / " + productDetail.ProductName + " / " + productDetail.CategoryName);
+                }
+            }
+            else
+            {
+                Console.WriteLine(result.Message);
             }
 
+            
+
+            
         }
     }
 }
